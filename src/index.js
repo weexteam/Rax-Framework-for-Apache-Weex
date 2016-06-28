@@ -8,7 +8,7 @@ let Element
 let Comment
 let sendTasks
 
-const instanceMap = {}
+export const instanceMap = {}
 
 function getInstance(instanceId) {
   const instance = instanceMap[instanceId]
@@ -70,26 +70,36 @@ function genNativeModules(instanceId) {
   const prefix = '@weex-module/'
   let modules = {}
 
-  if (typeof newModules === 'object') {
+  if (typeof NativeModules === 'object') {
     for (let name in NativeModules) {
-      name = prefix + name
-
-      modules[name] = {
+      let moduleName = prefix + name;
+      modules[moduleName] = {
         module: {exports: {}},
         isInitialized: true,
       }
 
       NativeModules[name].forEach(method => {
-        let defaultArgs = method.args
 
-        modules[name].module.exports[method.name] = (...args) => {
+        if (typeof method === 'string') {
+          method = {
+            name: method
+          }
+        }
+
+        let methodName = method.name
+
+        modules[moduleName].module.exports[methodName] = (...args) => {
           const finalArgs = []
-          defaultArgs.forEach((arg, index) => {
+          args.forEach((arg, index) => {
             const value = args[index]
-            finalArgs[index] = normalize(value, instance)
+            finalArgs[index] = normalize(value, getInstance(instanceId))
           })
 
-          sendTasks(String(instanceId), [{ module: name, method: methodName, args: finalArgs }])
+          sendTasks(String(instanceId), [{
+            module: name,
+            method: methodName,
+            args: finalArgs
+          }])
         }
 
       })
@@ -119,7 +129,7 @@ export function createInstance (instanceId, code, options /* {bundleUrl, debug} 
       instanceId,
       modules,
       callbacks: [],
-      callbackId: 1
+      callbackId: 0
     }
 
     function def(id, deps, factory) {
@@ -176,6 +186,7 @@ export function createInstance (instanceId, code, options /* {bundleUrl, debug} 
       'require',
       '__d',
       '__r',
+      '__DEV__',
       'document',
       code
     )
@@ -185,6 +196,7 @@ export function createInstance (instanceId, code, options /* {bundleUrl, debug} 
       req,
       def,
       req,
+      options.debug,
       document
     )
   } else {
@@ -218,7 +230,10 @@ export function destroyInstance (instanceId) {
     timestamp: Date.now()
   })
 
-  document.destroy()
+  if (document.destroy) {
+    document.destroy()
+  }
+
   delete instanceMap[instanceId]
 }
 
@@ -231,8 +246,7 @@ export function destroyInstance (instanceId) {
 export function getRoot (instanceId) {
   let instance = getInstance(instanceId)
   let document = instance.document
-  let body = document.body
-  return body.toJSON ? body.toJSON() : {}
+  return document.toJSON ? document.toJSON() : {}
 }
 
 

@@ -1,4 +1,4 @@
-function Document () {
+export function Document () {
   this.refs = {}
 }
 
@@ -94,7 +94,7 @@ Document.prototype.toJSON = function () {
   return {}
 }
 
-function Element (config) {
+export function Element (config) {
   this.ref = config.ref
   this.parentRef = config.parentRef
   this.type = config.type
@@ -123,5 +123,3 @@ Element.prototype.toJSON = function () {
 
   return result
 }
-
-module.exports = Document
