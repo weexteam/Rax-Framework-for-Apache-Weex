@@ -1,0 +1,19 @@
+{
+  "name": "weex-rx-framework",
+  "version": "0.0.1",
+  "description": "Rx framework for weex",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weexteam/weex-rx-framework.git"
+  },
+  "keywords": [
+    "weex"
+  ],
+  "author": "yuanyan <yuanyan.cao@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/weexteam/weex-rx-framework/issues"
+  },
+  "homepage": "https://github.com/weexteam/weex-rx-framework#readme"
+}
