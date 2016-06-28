@@ -242,7 +242,7 @@ export function getRoot (instanceId) {
  * @param  {string} instanceId
  * @param  {array} tasks list with `method` and `args`
  */
-export function callJS (instanceId, tasks) {
+export function recieveTasks (instanceId, tasks) {
   let instance = getInstance(instanceId)
   if (Array.isArray(tasks)) {
     const { callbacks, document } = instance
