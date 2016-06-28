@@ -1,3 +1,5 @@
+'use strict'
+
 let NativeComponents = {}
 let NativeModules = {}
 
@@ -240,7 +242,7 @@ export function getRoot (instanceId) {
  * @param  {string} instanceId
  * @param  {array} tasks list with `method` and `args`
  */
-function callJS (instanceId, tasks) {
+export function callJS (instanceId, tasks) {
   let instance = getInstance(instanceId)
   if (Array.isArray(tasks)) {
     const { callbacks, document } = instance
