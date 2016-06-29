@@ -8,10 +8,10 @@ let Element
 let Comment
 let sendTasks
 
-export const instanceMap = {}
+const instances = {}
 
-function getInstance(instanceId) {
-  const instance = instanceMap[instanceId]
+export function getInstance(instanceId) {
+  const instance = instances[instanceId]
   if (!instance) {
     throw new Error(`Invalid instance id "${instanceId}"`)
   }
@@ -119,12 +119,12 @@ function genNativeModules(instanceId) {
  * @param  {object} [data]
  */
 export function createInstance (instanceId, code, options /* {bundleUrl, debug} */, data) {
-  let instance = instanceMap[instanceId]
+  let instance = instances[instanceId]
 
   if (!instance) {
     let document = new Document(instanceId, options.bundleUrl)
     let modules = genNativeModules(instanceId)
-    instanceMap[instanceId] = {
+    instances[instanceId] = {
       document,
       instanceId,
       modules,
@@ -234,7 +234,7 @@ export function destroyInstance (instanceId) {
     document.destroy()
   }
 
-  delete instanceMap[instanceId]
+  delete instances[instanceId]
 }
 
 /**
@@ -272,7 +272,7 @@ export function recieveTasks (instanceId, tasks) {
         if (typeof callback === 'function') {
           callback(data)
           if (typeof ifKeepAlive === 'undefined' || ifKeepAlive === false) {
-            callbacks[callbackId] = undefined
+            callbacks[callbackId] = null
           }
         }
       }
