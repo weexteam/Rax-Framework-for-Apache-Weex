@@ -1,5 +1,6 @@
 export function Document () {
   this.refs = {}
+  this.URL = 'http://example.com'
 }
 
 Document.prototype.createBody = function (config) {

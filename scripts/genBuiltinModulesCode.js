@@ -13,7 +13,6 @@ const builtinModules = [
   'rx-panresponder/0.0.4',
   'rx-toast/0.0.9',
   'rx-alert/0.0.6',
-  'rx-appear/0.0.11',
   'rx-location/0.0.7',
   'rx-mtop/0.0.8',
   'rx-user/0.0.6',

@@ -9,24 +9,57 @@ let code = `
   define("foo", function(require, exports, module){
     var modal = require("@weex-module/modal");
     var Rx = require("kg/rx/index");
-    console.log(Rx);
+    console.log('rx', typeof Rx.Component === 'function');
 
-    var RxComponents = require("kg/rx-components/index");
-    console.log(RxComponents);
+    var Components = require("kg/rx-components/index");
+    console.log('rx-compnents', typeof Components.Image === 'function');
 
     var Animated = require('kg/rx-animated/index');
-    console.log(typeof Animated.createAnimatedComponent === 'function');
+    console.log('rx-animated', typeof Animated.createAnimatedComponent === 'function');
 
     var Env = require('kg/rx-env/index');
-    console.log(Env.isWeb === false);
+    console.log('rx-env', Env.isWeb === false);
 
-    var Dimensions = require('kg/rx-dimensions/index')
-    console.log(typeof Dimensions.get === 'function');
+    var Dimensions = require('kg/rx-dimensions/index');
+    console.log('rx-dimensions', typeof Dimensions.get === 'function');
 
-    var PanResponder = require('kg/rx-panresponder/index')
-    console.log(typeof PanResponder.create === 'function');
+    var PanResponder = require('kg/rx-panresponder/index');
+    console.log('rx-panresponder', typeof PanResponder.create === 'function');
 
-    modal.alert('hi', function(data){ console.log(data) });
+    var Fetch = require('kg/rx-fetch/index');
+    console.log('rx-fetch', typeof Fetch === 'function');
+
+    var Location = require('kg/rx-location/index');
+    console.log('rx-location', typeof Location === 'object');
+
+    var Downgrade = require('kg/rx-downgrade/index');
+    console.log('rx-downgrade', typeof Downgrade.setting === 'function');
+
+    var Toast = require('kg/rx-toast/index');
+    console.log('rx-toast', typeof Toast.show === 'function');
+
+    var User = require('kg/rx-user/index');
+    console.log('rx-user', typeof User === 'object');
+
+    var Spm = require('kg/rx-spm/index');
+    console.log('rx-spm', typeof Spm === 'object');
+
+    var goldlog = require('kg/rx-goldlog/index');
+    console.log('rx-goldlog', typeof goldlog === 'object');
+
+    var mtop = require('kg/rx-mtop/index');
+    console.log('rx-mtop', typeof mtop === 'object');
+
+    var mounter = require('kg/rx-mounter/index');
+    console.log('rx-mounter', typeof mounter === 'object');
+
+    // var Windvane = require('kg/rx-windvane/index');
+    // console.log('rx-windvane', typeof Windvane.call === 'function');
+
+    // var Window = require('kg/rx-window/index');
+    // console.log('rx-window', typeof Window === 'object');
+
+    modal.alert('hi', function(data){ console.log('alert callback data', data) });
     module.exports = "bar";
   });
   var foo = require("foo");
@@ -76,7 +109,7 @@ let id2 = 2
 let code2 = `
   define("foo", function(require, exports, module){
     var modal = require("@weex-module/modal");
-    modal.alert('hi', function(data){ console.log(data) });
+    modal.alert('hi', function(data){ console.log('alert callback data', data) });
     module.exports = "bar";
   });
   var foo = require("foo");
