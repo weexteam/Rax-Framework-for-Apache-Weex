@@ -1,6 +1,6 @@
 {
   "name": "weex-rx-framework",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "Rx framework for weex",
   "main": "./lib/index.js",
   "repository": {
@@ -25,7 +25,11 @@
   },
   "homepage": "https://github.com/weexteam/weex-rx-framework#readme",
   "devDependencies": {
-    "babel-cli": "~6.10.1",
-    "babel-preset-es2015": "~6.9.0"
+    "async": "^2.0.1",
+    "babel-cli": "^6.10.1",
+    "babel-polyfill": "^6.13.0",
+    "babel-preset-es2015": "~6.9.0",
+    "easyfile": "^0.1.0",
+    "request": "^2.74.0"
   }
 }

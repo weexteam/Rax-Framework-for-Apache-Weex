@@ -1,4 +1,5 @@
-'use strict'
+import babelHelpers from './babelHelpers'
+import builtinModulesCode from './builtinModulesCode';
 
 let NativeComponents = {}
 let NativeModules = {}
@@ -9,6 +10,7 @@ let Comment
 let sendTasks
 
 const instances = {}
+const { WXEnvironment } = global
 
 export function getInstance(instanceId) {
   const instance = instances[instanceId]
@@ -121,15 +123,15 @@ function genNativeModules(instanceId) {
 export function createInstance (instanceId, code, options /* {bundleUrl, debug} */, data) {
   let instance = instances[instanceId]
 
-  if (!instance) {
+  if (instance == undefined) {
     let document = new Document(instanceId, options.bundleUrl)
     let modules = genNativeModules(instanceId)
-    instances[instanceId] = {
+    instance = instances[instanceId] = {
       document,
       instanceId,
       modules,
       callbacks: [],
-      callbackId: 0
+      uid: 0
     }
 
     function def(id, deps, factory) {
@@ -181,6 +183,40 @@ export function createInstance (instanceId, code, options /* {bundleUrl, debug} 
       return mod.module.exports
     }
 
+    let timerAPIs;
+    if (WXEnvironment && WXEnvironment.platform !== 'Web') {
+      const timer = req('@weex-module/timer')
+      timerAPIs = {
+        setTimeout: (...args) => {
+          const handler = function () {
+            args[0](...args.slice(2))
+          }
+          timer.setTimeout(handler, args[1])
+          return instance.uid.toString()
+        },
+        setInterval: (...args) => {
+          const handler = function () {
+            args[0](...args.slice(2))
+          }
+          timer.setInterval(handler, args[1])
+          return instance.uid.toString()
+        },
+        clearTimeout: (n) => {
+          timer.clearTimeout(n)
+        },
+        clearInterval: (n) => {
+          timer.clearInterval(n)
+        }
+      }
+    } else {
+      timerAPIs = {
+        setTimeout,
+        setInterval,
+        clearTimeout,
+        clearInterval
+      }
+    }
+
     let init = new Function(
       'define',
       'require',
@@ -188,7 +224,12 @@ export function createInstance (instanceId, code, options /* {bundleUrl, debug} 
       '__r',
       '__DEV__',
       'document',
-      code
+      'setTimeout',
+      'clearTimeout',
+      'setInterval',
+      'clearInterval',
+      'babelHelpers',
+      builtinModulesCode + code
     )
 
     init(
@@ -197,7 +238,12 @@ export function createInstance (instanceId, code, options /* {bundleUrl, debug} 
       def,
       req,
       options.debug,
-      document
+      document,
+      timerAPIs.setTimeout,
+      timerAPIs.clearTimeout,
+      timerAPIs.setInterval,
+      timerAPIs.clearInterval,
+      babelHelpers
     )
   } else {
     throw new Error(`Instance id "${instanceId}" existed when create instance`)
@@ -267,12 +313,12 @@ export function recieveTasks (instanceId, tasks) {
         document.fireEvent(el, type, e, domChanges)
       }
       if (task.method === 'callback') {
-        let [callbackId, data, ifKeepAlive] = task.args
-        let callback = callbacks[callbackId]
+        let [uid, data, ifKeepAlive] = task.args
+        let callback = callbacks[uid]
         if (typeof callback === 'function') {
           callback(data)
           if (typeof ifKeepAlive === 'undefined' || ifKeepAlive === false) {
-            callbacks[callbackId] = null
+            callbacks[uid] = null
           }
         }
       }
@@ -303,8 +349,8 @@ function normalize (v, instance) {
       }
       return v
     case 'function':
-      instance.callbacks[++instance.callbackId] = v
-      return instance.callbackId.toString()
+      instance.callbacks[++instance.uid] = v
+      return instance.uid.toString()
     default:
       return JSON.stringify(v)
   }

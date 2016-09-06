@@ -8,6 +8,24 @@ let id = '1'
 let code = `
   define("foo", function(require, exports, module){
     var modal = require("@weex-module/modal");
+    var Rx = require("kg/rx/index");
+    console.log(Rx);
+
+    var RxComponents = require("kg/rx-components/index");
+    console.log(RxComponents);
+
+    var Animated = require('kg/rx-animated/index');
+    console.log(typeof Animated.createAnimatedComponent === 'function');
+
+    var Env = require('kg/rx-env/index');
+    console.log(Env.isWeb === false);
+
+    var Dimensions = require('kg/rx-dimensions/index')
+    console.log(typeof Dimensions.get === 'function');
+
+    var PanResponder = require('kg/rx-panresponder/index')
+    console.log(typeof PanResponder.create === 'function');
+
     modal.alert('hi', function(data){ console.log(data) });
     module.exports = "bar";
   });
