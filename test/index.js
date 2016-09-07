@@ -53,11 +53,11 @@ let code = `
     var mounter = require('kg/rx-mounter/index');
     console.log('rx-mounter', typeof mounter === 'object');
 
-    // var Windvane = require('kg/rx-windvane/index');
-    // console.log('rx-windvane', typeof Windvane.call === 'function');
+    var Windvane = require('kg/rx-windvane/index');
+    console.log('rx-windvane', typeof Windvane.call === 'function');
 
-    // var Window = require('kg/rx-window/index');
-    // console.log('rx-window', typeof Window === 'object');
+    var Window = require('kg/rx-window/index');
+    console.log('rx-window', typeof Window === 'object');
 
     modal.alert('hi', function(data){ console.log('alert callback data', data) });
     module.exports = "bar";

@@ -16,7 +16,7 @@ const builtinModules = [
   'rx-location/0.0.7',
   'rx-mtop/0.0.8',
   'rx-user/0.0.6',
-  'rx-windvane/0.0.3',
+  'rx-windvane/0.1.0',
   'rx-spm/0.0.6',
   'rx-goldlog/0.1.0',
   'rx-window/0.0.14',
@@ -30,7 +30,7 @@ async.map(builtinModules, function(moduleName, callback){
   const url = 'http://g.alicdn.com/kg/' + moduleName + '/index.nv.js';
   request(url, function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      console.log(`Success request "${moduleName}" (${body.substr(0, 30)}...)`)
+      console.log(`Success request ${(body.length/1024).toFixed(2)}kb "${moduleName}" (${body.substr(0, 30)}...)`)
       callback(null, body); // Show the HTML for the Google homepage.
     } else {
       console.error(`Failed request "${moduleName}": ${url}`);
@@ -43,5 +43,5 @@ async.map(builtinModules, function(moduleName, callback){
 
   const targetFile = path.join(__dirname, '../src/builtinModulesCode.js');
   easyfile.write(targetFile, moduleCode, {force: true});
-  console.log(`Generate builtinModulesCode to ${targetFile}`);
+  console.log(`Generate builtinModulesCode (${(moduleCode.length/1024).toFixed(2)}kb) to ${targetFile} `);
 });
