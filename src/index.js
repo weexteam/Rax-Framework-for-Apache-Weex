@@ -1,5 +1,5 @@
-import babelHelpers from './babelHelpers'
-import builtinModulesCode from './builtinModulesCode';
+import babelHelpers from '../build/babelHelpers'
+import builtinModulesCode from '../build/builtinModulesCode';
 
 let NativeComponents = {}
 let NativeModules = {}

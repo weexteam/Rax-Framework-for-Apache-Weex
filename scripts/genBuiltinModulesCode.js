@@ -19,8 +19,8 @@ const builtinModules = [
   'rx-windvane/0.1.0',
   'rx-spm/0.0.6',
   'rx-goldlog/0.1.0',
-  'rx-window/0.0.14',
-  'rx-mounter/0.0.5',
+  'rx-window/0.1.0',
+  'rx-mounter/0.0.6',
   'rx-components/0.1.3'
 ];
 
@@ -41,7 +41,7 @@ async.map(builtinModules, function(moduleName, callback){
   const code = results.join('\n');
   const moduleCode = 'module.exports = ' + JSON.stringify(code);
 
-  const targetFile = path.join(__dirname, '../src/builtinModulesCode.js');
+  const targetFile = path.join(__dirname, '../build/builtinModulesCode.js');
   easyfile.write(targetFile, moduleCode, {force: true});
   console.log(`Generate builtinModulesCode (${(moduleCode.length/1024).toFixed(2)}kb) to ${targetFile} `);
 });

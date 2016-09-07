@@ -33,6 +33,6 @@ const whitelist = [
 ];
 
 const helpersCode = require('babel-core').buildExternalHelpers(whitelist, 'umd');
-const targetFile = path.join(__dirname, '../src/babelHelpers.js');
+const targetFile = path.join(__dirname, '../build/babelHelpers.js');
 easyfile.write(targetFile, helpersCode, {force: true});
 console.log(`Generate babelHelpers(${whitelist}) to ${targetFile}`);
