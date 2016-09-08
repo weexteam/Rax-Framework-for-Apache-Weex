@@ -1,6 +1,6 @@
 {
   "name": "weex-rx-framework",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Rx framework for weex",
   "main": "./lib/index.js",
   "repository": {
@@ -11,7 +11,9 @@
     "weex"
   ],
   "files": [
-    "lib"
+    "lib",
+    "build",
+    "scripts"
   ],
   "scripts": {
     "prepublish": "npm run builtin && babel src --out-dir lib",
