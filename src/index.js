@@ -223,6 +223,9 @@ export function createInstance (instanceId, code, options /* {bundleUrl, debug} 
       '__d',
       '__r',
       '__DEV__',
+      '__weex_options__',
+      '__weex_data__',
+      '__weex_document__',
       'document',
       'setTimeout',
       'clearTimeout',
@@ -238,6 +241,9 @@ export function createInstance (instanceId, code, options /* {bundleUrl, debug} 
       def,
       req,
       options.debug,
+      options,
+      data,
+      document,
       document,
       timerAPIs.setTimeout,
       timerAPIs.clearTimeout,
@@ -261,7 +267,8 @@ export function refreshInstance (instanceId, data) {
   let instance = getInstance(instanceId)
   let document = instance.document
   document.documentElement.fireEvent('refresh', {
-    timestamp: Date.now()
+    timestamp: Date.now(),
+    data,
   })
 }
 
