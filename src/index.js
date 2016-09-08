@@ -7,6 +7,7 @@ let NativeModules = {}
 let Document
 let Element
 let Comment
+let Listener
 let sendTasks
 
 const instances = {}
@@ -24,6 +25,7 @@ export function init (cfg) {
   Document = cfg.Document
   Element = cfg.Element
   Comment = cfg.Comment
+  Listener = cfg.Listener
   sendTasks = cfg.sendTasks
 }
 
@@ -124,7 +126,7 @@ export function createInstance (instanceId, code, options /* {bundleUrl, debug} 
   let instance = instances[instanceId]
 
   if (instance == undefined) {
-    let document = new Document(instanceId, options.bundleUrl)
+    let document = new Document(instanceId, options.bundleUrl, null, Listener)
     let modules = genNativeModules(instanceId)
     instance = instances[instanceId] = {
       document,

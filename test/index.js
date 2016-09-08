@@ -5,7 +5,7 @@ import * as modules from './__mocks__/modules'
 import components from './__mocks__/components'
 
 let id = '1'
-let code = `
+let code = `// {"framework": "Rx"}
   define("foo", function(require, exports, module){
     var modal = require("@weex-module/modal");
     var Rx = require("kg/rx/index");
