@@ -16,5 +16,5 @@ module.exports = [
   'rx-goldlog/0.1.1',
   'rx-window/0.1.0',
   'rx-mounter/0.0.6',
-  'rx-components/0.1.3'
+  'rx-components/0.1.4'
 ];
