@@ -1,6 +1,6 @@
 {
   "name": "weex-rx-framework",
-  "version": "0.1.3-beta4",
+  "version": "0.1.3",
   "description": "Rx framework for weex",
   "main": "./lib/index.js",
   "repository": {
