@@ -66,7 +66,11 @@ export function registerMethods (apis) {
  */
 export function registerModules (newModules) {
   if (typeof newModules === 'object') {
-    NativeModules = newModules
+    for (var name in newModules) {
+      if (Object.prototype.hasOwnProperty.call(newModules, name)) {
+        NativeModules[name] = newModules[name];
+      }
+    }
   }
 }
 
@@ -311,7 +315,7 @@ export function getRoot (instanceId) {
  * @param  {string} instanceId
  * @param  {array} tasks list with `method` and `args`
  */
-export function recieveTasks (instanceId, tasks) {
+export function receiveTasks (instanceId, tasks) {
   let instance = getInstance(instanceId)
   if (Array.isArray(tasks)) {
     const { callbacks, document } = instance

@@ -92,7 +92,7 @@ framework.registerComponents(components)
 
 framework.createInstance(id, code, options)
 
-framework.recieveTasks(id, [{
+framework.receiveTasks(id, [{
   method: 'callback',
   args: ['1', {foo: 1}]
 }])
@@ -132,7 +132,7 @@ framework.registerComponents(components)
 
 framework.createInstance(id2, code2, options)
 
-framework.recieveTasks(id2, [{
+framework.receiveTasks(id2, [{
   method: 'callback',
   args: ['1', {bar: 1}, true]
 }])
