@@ -1,5 +1,5 @@
 module.exports = [
-  'rx/0.1.18',
+  'rx/0.1.19',
   'rx-env/0.0.8',
   'rx-dimensions/0.0.9',
   'rx-fetch/0.0.11',
