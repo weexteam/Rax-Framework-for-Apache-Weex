@@ -2,7 +2,7 @@ module.exports = [
   'rx/0.1.19',
   'rx-env/0.0.8',
   'rx-dimensions/0.0.9',
-  'rx-fetch/0.0.11',
+  'rx-fetch/0.0.12',
   'rx-downgrade/0.0.5',
   'rx-animated/0.1.1',
   'rx-panresponder/0.0.4',
