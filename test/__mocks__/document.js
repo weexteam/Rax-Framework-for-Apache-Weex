@@ -1,6 +1,11 @@
 export function Document () {
   this.refs = {}
   this.URL = 'http://example.com'
+  this.listener = {
+    updateFinish: function(){
+
+    }
+  }
 }
 
 Document.prototype.createBody = function (config) {
@@ -12,6 +17,10 @@ Document.prototype.createBody = function (config) {
       appendToDoc(doc, child, body.ref, -1)
     })
   }
+}
+
+Document.prototype.open = Document.prototype.close = function () {
+
 }
 
 Document.prototype.addElement = function (parentRef, config, index) {

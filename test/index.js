@@ -14,6 +14,9 @@ let code = `// {"framework": "Rx"}
     var Components = require("kg/rx-components/index");
     console.log('rx-compnents', typeof Components.Image === 'function');
 
+    var Promise = require("kg/rx-promise/index");
+    console.log('rx-promise', typeof Promise === 'function');
+
     var Animated = require('kg/rx-animated/index');
     console.log('rx-animated', typeof Animated.createAnimatedComponent === 'function');
 

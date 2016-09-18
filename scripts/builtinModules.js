@@ -1,14 +1,15 @@
 module.exports = [
   'rx/0.1.19',
   'rx-env/0.0.8',
-  'rx-dimensions/0.0.9',
-  'rx-fetch/0.0.12',
-  'rx-downgrade/0.0.5',
+  'rx-promise/0.0.2',
+  'rx-dimensions/0.0.10',
+  'rx-fetch/0.1.0',
+  'rx-downgrade/0.1.0',
   'rx-animated/0.1.1',
   'rx-panresponder/0.0.4',
   'rx-toast/0.0.9',
   'rx-alert/0.0.6',
-  'rx-location/0.0.7',
+  'rx-location/0.1.0',
   'rx-mtop/0.0.8',
   'rx-user/0.0.6',
   'rx-windvane/0.1.0',
@@ -16,5 +17,5 @@ module.exports = [
   'rx-goldlog/0.1.1',
   'rx-window/0.1.0',
   'rx-mounter/0.0.6',
-  'rx-components/0.1.4'
+  'rx-components/0.1.5'
 ];

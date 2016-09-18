@@ -237,6 +237,7 @@ export function createInstance (instanceId, code, options /* {bundleUrl, debug} 
       'clearTimeout',
       'setInterval',
       'clearInterval',
+      'global',
       'babelHelpers',
       builtinModulesCode + code
     )
@@ -255,6 +256,7 @@ export function createInstance (instanceId, code, options /* {bundleUrl, debug} 
       timerAPIs.clearTimeout,
       timerAPIs.setInterval,
       timerAPIs.clearInterval,
+      global,
       babelHelpers
     )
   } else {
@@ -308,6 +310,43 @@ export function getRoot (instanceId) {
   return document.toJSON ? document.toJSON() : {}
 }
 
+function fireEvent(doc, ref, type, e, domChanges) {
+  if (Array.isArray(ref)) {
+    ref.some((ref) => {
+      return fireEvent(doc, ref, type, e) !== false
+    })
+    return
+  }
+
+  const el = doc.getRef(ref)
+
+  if (el) {
+    doc.close()
+    const result = doc.fireEvent(el, type, e, domChanges)
+    doc.listener.updateFinish()
+    doc.open()
+    return result
+  }
+
+  return new Error(`Invalid element reference "${ref}"`)
+}
+
+function handleCallback(doc, callbacks, callbackId, data, ifKeepAlive) {
+
+  let callback = callbacks[callbackId]
+  if (typeof callback === 'function') {
+    doc.close()
+    callback(data)
+    if (typeof ifKeepAlive === 'undefined' || ifKeepAlive === false) {
+      callbacks[callbackId] = null
+    }
+    doc.listener.updateFinish();
+    doc.open()
+    return
+  }
+
+  return new Error(`Invalid callback id "${callbackId}"`)
+}
 
 /**
  * accept calls from native (event or callback)
@@ -316,28 +355,22 @@ export function getRoot (instanceId) {
  * @param  {array} tasks list with `method` and `args`
  */
 export function receiveTasks (instanceId, tasks) {
-  let instance = getInstance(instanceId)
+  const instance = getInstance(instanceId)
   if (Array.isArray(tasks)) {
     const { callbacks, document } = instance
+    const results = []
     tasks.forEach(task => {
+      let result;
       if (task.method === 'fireEvent') {
-        let [nodeId, type, e, domChanges] = task.args
-        let el = document.getRef(nodeId)
-        document.fireEvent(el, type, e, domChanges)
-      }
-      if (task.method === 'callback') {
+        let [nodeId, type, data, domChanges] = task.args
+        result = fireEvent(document, nodeId, type, data, domChanges)
+      } else if (task.method === 'callback') {
         let [uid, data, ifKeepAlive] = task.args
-        let callback = callbacks[uid]
-        if (typeof callback === 'function') {
-          callback(data)
-          if (typeof ifKeepAlive === 'undefined' || ifKeepAlive === false) {
-            callbacks[uid] = null
-          }
-        }
+        result = handleCallback(document, callbacks, uid, data, ifKeepAlive)
       }
+      results.push(result)
     })
-
-    sendTasks(String(instanceId), [{ module: 'dom', method: 'updateFinish', args: [] }])
+    return results
   }
 }
 
