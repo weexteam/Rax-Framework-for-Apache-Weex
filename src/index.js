@@ -1,4 +1,3 @@
-import babelHelpers from '../build/babelHelpers'
 import builtinModulesCode from '../build/builtinModulesCode';
 
 let NativeComponents = {}
@@ -238,9 +237,14 @@ export function createInstance (instanceId, code, options /* {bundleUrl, debug} 
       'setInterval',
       'clearInterval',
       'global',
-      'babelHelpers',
       builtinModulesCode + code
     )
+
+    // freeze
+    let freezedGlobal = global;
+    if (Object.freeze) {
+      freezedGlobal = Object.freeze(global);
+    }
 
     init(
       def,
@@ -256,8 +260,7 @@ export function createInstance (instanceId, code, options /* {bundleUrl, debug} 
       timerAPIs.clearTimeout,
       timerAPIs.setInterval,
       timerAPIs.clearInterval,
-      global,
-      babelHelpers
+      freezedGlobal
     )
   } else {
     throw new Error(`Instance id "${instanceId}" existed when create instance`)
@@ -278,6 +281,7 @@ export function refreshInstance (instanceId, data) {
     timestamp: Date.now(),
     data,
   })
+  document.listener.refreshFinish()
 }
 
 /**
@@ -321,10 +325,8 @@ function fireEvent(doc, ref, type, e, domChanges) {
   const el = doc.getRef(ref)
 
   if (el) {
-    doc.close()
     const result = doc.fireEvent(el, type, e, domChanges)
     doc.listener.updateFinish()
-    doc.open()
     return result
   }
 
@@ -335,13 +337,11 @@ function handleCallback(doc, callbacks, callbackId, data, ifKeepAlive) {
 
   let callback = callbacks[callbackId]
   if (typeof callback === 'function') {
-    doc.close()
     callback(data)
     if (typeof ifKeepAlive === 'undefined' || ifKeepAlive === false) {
       callbacks[callbackId] = null
     }
     doc.listener.updateFinish();
-    doc.open()
     return
   }
 
