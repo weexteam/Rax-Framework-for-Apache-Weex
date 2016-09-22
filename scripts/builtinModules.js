@@ -1,5 +1,5 @@
 module.exports = [
-  'rx/0.1.20',
+  'rx/0.1.21',
   'rx-env/0.0.8',
   'rx-promise/0.0.2',
   'rx-dimensions/0.0.12',
