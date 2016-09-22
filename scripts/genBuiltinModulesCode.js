@@ -8,7 +8,7 @@ async.map(builtinModules, function(moduleName, callback){
   const url = 'http://g.alicdn.com/kg/' + moduleName + '/index.nv.js';
   request(url, function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      console.log(`Success request ${(body.length/1024).toFixed(2)}kb "${moduleName}" (${body.substr(0, 30)}...)`)
+      console.log(`Success request ${(body.length/1024).toFixed(2)}kb "${moduleName}" (${body.substr(0, 30)}...) ${url}`)
       callback(null, body); // Show the HTML for the Google homepage.
     } else {
       console.error(`Failed request "${moduleName}": ${url}`);

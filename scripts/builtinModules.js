@@ -9,7 +9,7 @@ module.exports = [
   'rx-panresponder/0.0.4',
   'rx-toast/0.0.9',
   'rx-alert/0.0.6',
-  'rx-location/0.1.0',
+  'rx-location/0.1.2',
   'rx-mtop/0.0.8',
   'rx-user/0.0.6',
   'rx-windvane/0.1.0',
