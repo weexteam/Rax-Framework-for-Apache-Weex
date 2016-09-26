@@ -7,7 +7,7 @@ module.exports = [
   'rx-downgrade/0.1.0',
   'rx-animated/0.1.1',
   'rx-panresponder/0.0.4',
-  'rx-toast/0.0.9',
+  'rx-toast/0.1.0',
   'rx-alert/0.0.6',
   'rx-location/0.1.2',
   'rx-mtop/0.0.8',
@@ -17,5 +17,5 @@ module.exports = [
   'rx-goldlog/0.1.4',
   'rx-window/0.1.0',
   'rx-mounter/0.0.6',
-  'rx-components/0.1.5'
+  'rx-components/0.1.6'
 ];
