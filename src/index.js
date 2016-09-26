@@ -237,14 +237,8 @@ export function createInstance (instanceId, code, options /* {bundleUrl, debug} 
       'setInterval',
       'clearInterval',
       'global',
-      builtinModulesCode + code
+      '"use strict";' + builtinModulesCode + code
     )
-
-    // freeze
-    let freezedGlobal = global;
-    if (Object.freeze) {
-      freezedGlobal = Object.freeze(global);
-    }
 
     init(
       def,
@@ -260,7 +254,7 @@ export function createInstance (instanceId, code, options /* {bundleUrl, debug} 
       timerAPIs.clearTimeout,
       timerAPIs.setInterval,
       timerAPIs.clearInterval,
-      freezedGlobal
+      global
     )
   } else {
     throw new Error(`Instance id "${instanceId}" existed when create instance`)
