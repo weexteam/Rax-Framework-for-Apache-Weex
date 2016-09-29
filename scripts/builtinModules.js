@@ -3,7 +3,7 @@ module.exports = [
   'rx-env/0.0.8',
   'rx-promise/0.0.2',
   'rx-dimensions/0.0.12',
-  'rx-fetch/0.1.0',
+  'rx-fetch/0.1.1',
   'rx-downgrade/0.1.0',
   'rx-animated/0.1.1',
   'rx-panresponder/0.0.4',
@@ -14,7 +14,7 @@ module.exports = [
   'rx-user/0.0.6',
   'rx-windvane/0.1.0',
   'rx-spm/0.0.7',
-  'rx-goldlog/0.1.4',
+  'rx-goldlog/0.1.5',
   'rx-window/0.1.0',
   'rx-mounter/0.0.6',
   'rx-components/0.1.6'
