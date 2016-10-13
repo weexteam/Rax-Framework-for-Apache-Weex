@@ -10,7 +10,6 @@ let Listener
 let sendTasks
 
 const instances = {}
-const { WXEnvironment } = global
 
 export function getInstance(instanceId) {
   const instance = instances[instanceId]
@@ -189,7 +188,7 @@ export function createInstance (instanceId, code, options /* {bundleUrl, debug} 
     }
 
     let timerAPIs;
-    if (WXEnvironment && WXEnvironment.platform !== 'Web') {
+    if (typeof WXEnvironment === 'object' && WXEnvironment.platform !== 'Web') {
       const timer = req('@weex-module/timer')
       timerAPIs = {
         setTimeout: (...args) => {
