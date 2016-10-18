@@ -187,7 +187,8 @@ export function createInstance (instanceId, code, options /* {bundleUrl, debug} 
       return mod.module.exports
     }
 
-    let timerAPIs;
+    let timerAPIs
+    let dialogAPIs
     if (typeof WXEnvironment === 'object' && WXEnvironment.platform !== 'Web') {
       const timer = req('@weex-module/timer')
       timerAPIs = {
@@ -212,12 +213,26 @@ export function createInstance (instanceId, code, options /* {bundleUrl, debug} 
           timer.clearInterval(n)
         }
       }
+      
+      const toast ＝ req('@weex-module/toast')
+      dialogAPIs = {
+        alert: (message) => {
+          toast.alert({
+            message
+          }, function() {})
+        }
+      }
+      
     } else {
       timerAPIs = {
         setTimeout,
         setInterval,
         clearTimeout,
         clearInterval
+      }
+      
+      dialogAPIs = {
+        alert,
       }
     }
 
@@ -231,6 +246,7 @@ export function createInstance (instanceId, code, options /* {bundleUrl, debug} 
       '__weex_data__',
       '__weex_document__',
       'document',
+      'alert',
       'setTimeout',
       'clearTimeout',
       'setInterval',
@@ -249,6 +265,7 @@ export function createInstance (instanceId, code, options /* {bundleUrl, debug} 
       data,
       document,
       document,
+      dialogAPIs.alert,
       timerAPIs.setTimeout,
       timerAPIs.clearTimeout,
       timerAPIs.setInterval,
